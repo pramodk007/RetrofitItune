@@ -25,8 +25,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         songAdapter = SongAdapter()
-
+        binding.rvSongsList.setAdapter(songAdapter)
         binding.rvSongsList.layoutManager = GridLayoutManager(this, 2)
+
 
         val repository= SongRepository()
 
@@ -52,7 +53,6 @@ class MainActivity : AppCompatActivity() {
             if(response.isSuccessful) {
                 val resultModelList: List<ResultModel> = response.body()!!.resultModels
                 if (resultModelList.isNotEmpty()) {
-                    binding.rvSongsList.setAdapter(songAdapter)
                     songAdapter.submitList(resultModelList)
                 }
             }
