@@ -7,13 +7,16 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddev.retrofititune.adapter.SongAdapter
 import com.androiddev.retrofititune.data.ResultModel
 import com.androiddev.retrofititune.databinding.ActivityMainBinding
 import com.androiddev.retrofititune.repository.SongRepository
 import com.androiddev.retrofititune.viewModel.MainViewModel
 import com.androiddev.retrofititune.viewModel.MainViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel :MainViewModel
     lateinit var binding:ActivityMainBinding
@@ -26,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         songAdapter = SongAdapter()
         binding.rvSongsList.setAdapter(songAdapter)
-        binding.rvSongsList.layoutManager = GridLayoutManager(this, 2)
+        binding.rvSongsList.layoutManager = LinearLayoutManager(this@MainActivity)
 
 
         val repository= SongRepository()
@@ -42,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     private fun getSongs() {
         search = binding.edtSearchSong.text.toString()
         if (search.isEmpty()) {
-            Toast.makeText(applicationContext, "enter the artist/song name", Toast.LENGTH_SHORT)
+            Toast.makeText(applicationContext, "enter the query to search.", Toast.LENGTH_SHORT)
                 .show()
         }
         val ch = '+'
@@ -57,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             else{
-                Log.d("error","cant get song")
+                Log.d("error","cant get query")
             }
 
         })
